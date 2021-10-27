@@ -52,19 +52,15 @@ namespace EmployeePerformanceApp.Controllers
                 else if (user != null && user.RoleId == 1)
                 {
                     await Authenticate(user);
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("CreateUser", "Admin");
                 }
                 else if (user != null && user.RoleId == 3)
                 {
                     await Authenticate(user);
-                    return RedirectToAction("Index", "Lead");
-                }
-                else if (user != null)
-                {
-                    ModelState.AddModelError(string.Empty, "Please, Enter Values.");
-                }
+                    return RedirectToAction("CheckHierarchy", "Lead");
+                }                
                 else
-                ModelState.AddModelError(string.Empty, "Invalid login or password attempt.");
+                ModelState.AddModelError("Error" , "Invalid login or password attempt.");
             }
             return View(model);
         }
@@ -75,12 +71,10 @@ namespace EmployeePerformanceApp.Controllers
         }
         private async Task Authenticate(User employee)
         {
-
             // создаем один claim
             var claims = new List<Claim>
             {
-
-                new Claim(ClaimsIdentity.DefaultNameClaimType, employee.Login),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, employee.FirstName + " " + employee.LastName),
                 new Claim("Id", employee.ID.ToString()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, employee.Role?.RoleName)
             };
@@ -89,6 +83,7 @@ namespace EmployeePerformanceApp.Controllers
                 ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+
         }
     }
 }

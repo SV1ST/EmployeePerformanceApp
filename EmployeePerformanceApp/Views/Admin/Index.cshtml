@@ -1,10 +1,4 @@
 ﻿@{
     ViewData["Title"] = "Admin Home Page";
-}
-<h1>@ViewBag.Ide</h1>
-@using (Html.BeginForm("Logout", "Account", FormMethod.Post))
-{
-    <div class="input-form">
-        <input type="submit" name="logout" value="Log out" />
-    </div>
+    Layout = "_LayoutAdmin";
 }

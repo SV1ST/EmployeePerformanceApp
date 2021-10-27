@@ -1,0 +1,61 @@
+﻿@model AddMarkViewModel
+@{
+    ViewData["Title"] = "Add Mark";
+    Layout = "_LayoutLead";
+}
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<body>
+    <div id="PlaceHolderHere"></div>
+    <div class="form">
+        <table class="table">
+            <tr>
+                <td>LastName</td>
+                <td>FirstName</td>
+                <td>Role</td>
+                <td>Status</td>              
+            </tr>
+            @foreach (User user in Model.Users)
+            {
+                if (user.Department.DepartmentName == "Admins")
+                {
+                    continue;
+                }
+                if (user.DepartmentId != Model.CurrentUserDepartmentId || user.RoleId != Model.CurrentUserRoleId)
+                {
+                    continue;
+                }
+                if (Model.LastName != null && !user.LastName.Contains(Model.LastName.Trim()) ||
+                    Model.FirstName != null && !user.FirstName.Contains(Model.FirstName.Trim()) ||
+                    Model.StatusName != null && !user.Status.StatusName.Contains(Model.StatusName.Trim()) ||
+                    Model.RoleName != null && !user.Role.RoleName.Contains(Model.RoleName.Trim()))
+                {
+                    continue;
+                }
+
+        <tr>
+            <td>@user.LastName</td>
+            <td>@user.FirstName</td>
+            <td>@user.Role.RoleName</td>
+            <td>@user.Status.StatusName</td>
+            <td><a asp-controller="Lead" asp-action="AddMarkAction" asp-route-userID="@user.ID">Add Mark</a></td>
+            
+
+        </tr>
+            }
+        </table>
+        <form method="post" asp-action="AddMark">
+            <div class="text-center">
+
+                <input type="text" name="_lastName" placeholder="Surname" />
+                <input type="text" name="_firstName" placeholder="Name" />
+                <input type="text" name="_status" placeholder="Status" />
+                <input type="text" name="_role" placeholder="Role" />
+
+                <div>
+                    <input type="submit" value="Search" class="btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

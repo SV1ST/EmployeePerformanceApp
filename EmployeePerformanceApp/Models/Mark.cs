@@ -7,7 +7,7 @@ namespace EmployeePerformanceApp.Models
 {
     public class Mark
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public int ParameterId { get; set; }
         public int MarkValue { get; set; }
         public string MarkDescription { get; set; }

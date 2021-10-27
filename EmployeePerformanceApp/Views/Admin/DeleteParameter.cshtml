@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Delete Parameter";
+    Layout = "_LayoutAdmin";
+}
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<body>
+    <div class="form">
+        <table class="table">
+            <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
+            @foreach (var item in Model)
+            {
+                <tr><td>@item.ID</td><td>@item.ParameterName</td><td>@item.Coefficient</td></tr>
+            }
+        </table>
+
+        <form method="post" asp-action="DeleteParameter" asp-controller="Admin">
+            <div class="text-center">
+                <input type="text" name="ID" required placeholder="Enter ID Parameter" />
+                <div>
+                    <input type="submit" value="Delete" class="btn-danger" />
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

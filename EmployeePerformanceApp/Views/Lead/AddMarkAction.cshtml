@@ -1,0 +1,39 @@
+﻿@model AddMarkViewModel
+@{
+    ViewData["Title"] = "Add Mark";
+
+}
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<a asp-action="AddMark">Cancel</a>
+
+<form method="post" asp-action="AddMarkAction">
+
+    <input type="hidden" value="@Model.UserId" name="userId" />
+
+    <div>
+        <label for="parameterId">Parameter:</label>
+        <select name="parameterId">
+            @foreach (Parameter parameter in Model.Parameters)
+            {
+                <option value="@parameter.ID">@parameter.ParameterName</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="markValue">Value:</label>
+        <select name="markValue">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <input type="text" name="markDescription" required placeholder="Mark Description" />
+
+    <div>
+        <input type="submit" value="Add" />
+    </div>
+</form>

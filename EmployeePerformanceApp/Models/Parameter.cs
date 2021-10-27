@@ -7,14 +7,16 @@ namespace EmployeePerformanceApp.Models
 {
     public class Parameter
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int ID { get; set; }
+        public string ParameterName { get; set; }
         public double Coefficient { get; set; }
-        public Selection Selection { get; set; }
+
+        public List<Selection> Selections { get; set; }
         public List<Mark> Marks { get; set; }
         public Parameter()
         {
             Marks = new List<Mark>();
+            Selections = new List<Selection>();
         }
     }
 }

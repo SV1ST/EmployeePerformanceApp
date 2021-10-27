@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Delete User";
+    Layout = "_LayoutAdmin";
+}
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<body>
+    <div class="form">
+        <table class="table">
+            <tr>
+                <td>LastName</td>
+                <td>FirstName</td>
+                <td>Login</td>
+                <td>Password</td>
+                <td>Role</td>
+                <td>Status</td>
+                <td>Department</td>
+                <td>ID</td>
+            </tr>
+            @foreach (User user in Model.Users)
+            {
+                if (user.Department.DepartmentName == "Admins")
+                {
+                    continue;
+                }
+                if (Model.LastName != null && !user.LastName.Contains(Model.LastName.Trim()) ||
+                    Model.FirstName != null && !user.FirstName.Contains(Model.FirstName.Trim()) ||
+                    Model.DepartmentName != null && !user.Department.DepartmentName.Contains(Model.DepartmentName.Trim()) ||
+                    Model.StatusName != null && !user.Status.StatusName.Contains(Model.StatusName.Trim()) ||
+                    Model.RoleName != null && !user.Role.RoleName.Contains(Model.RoleName.Trim()))
+                {
+                    continue;
+                }
+
+                <tr>
+                    <td>@user.LastName</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.Login</td>
+                    <td>@user.Password</td>
+                    <td>@user.Role.RoleName</td>
+                    <td>@user.Status.StatusName</td>
+                    <td>@user.Department.DepartmentName</td>
+                    <td>@user.ID</td>
+                </tr>
+            }
+        </table>
+        <form method="post" asp-action="DeleteUser">
+            <div class="text-center">  
+                
+                <input type="text" name="_lastName" placeholder="Surname" />
+                <input type="text" name="_firstName" placeholder="Name" />
+                <input type="text" name="_department" placeholder="Department" />
+                <input type="text" name="_status" placeholder="Status" />
+                <input type="text" name="_role" placeholder="Role" />
+
+                <div>
+                    <input type="submit" value="Search" class="btn-info" />
+                </div>
+            </div>
+        </form>
+        <form method="post" asp-action="DeleteUserByID">
+            <div class="text-center">
+                <div class="input-form">
+                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+                    {
+                        <div class="text-danger">
+                            <strong>Error!</strong>
+                            <p>@ViewData.ModelState["Error"].Errors.First().ErrorMessage</p>
+                        </div>
+                    }
+                </div>               
+                <div class="form-inline">
+                    <label class="text-white-50">Enter unique ID for delete user</label>
+                    <input type="text" name="ID" placeholder="ID" required  />
+                    <input type="submit" value="Delete" class="btn-danger" />
+                </div>
+            </div>
+        </form>        
+    </div>
+            
+        
+    
+</body>

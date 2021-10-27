@@ -4,12 +4,20 @@
 
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/Login.css" />
+<link rel="stylesheet" type="text/css" href="~/css/login.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
 <body>
     <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
         <div class="validation" asp-validation-summary="ModelOnly"></div>
         <div class="form">
             <h2>Sign in</h2>
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+            {
+                <div class="input-form">
+                    <strong>Error!</strong>
+                    <p>@ViewData.ModelState["Error"].Errors.First().ErrorMessage</p>
+                </div>
+            }
             <div class="input-form">
                 <input type="text" asp-for="Login" placeholder="Login" />
                 <span asp-validation-for="Login" />

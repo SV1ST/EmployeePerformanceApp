@@ -1,6 +1,14 @@
 using EmployeePerformanceApp.Context;
+using EmployeePerformanceApp.Repository;
+using EmployeePerformanceApp.Repository.Roles;
+using EmployeePerformanceApp.Repository.Selections;
+using EmployeePerformanceApp.Repository.Statuses;
 using EmployeePerformanceApp.Repository.Users;
+using EmployeePerformanceApp.Service;
+using EmployeePerformanceApp.Service.Parameters;
+using EmployeePerformanceApp.Service.Selections;
 using EmployeePerformanceApp.Service.Users;
+using EmployeePerformanceApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +38,7 @@ namespace EmployeePerformanceApp
         {
             //DESKTOP-2QMD2OE
             //(localdb)\\mssqllocaldb
-            string connection = "Server=(localdb)\\mssqllocaldb;Database=EmployeeDiaryApp;Trusted_Connection=True;";
+            string connection = "Server=DESKTOP-2QMD2OE;Database=EmployeeDiaryAppDB;Trusted_Connection=True;";
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -40,10 +48,25 @@ namespace EmployeePerformanceApp
                 options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
             });
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
-           // services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddHttpContextAccessor();
 
+            //Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IParameterRepository, ParameterRepository>();
+            services.AddScoped<ISelectionRepository, SelectionRepository>();
+            services.AddScoped<IMarkRepository, MarkRepository>();
+
+
+
+            //Services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IParameterService, ParameterService>();
+            services.AddScoped<ISelectionService, SelectionService>();
+            services.AddScoped<IMarkService, MarkService>();
+           
             services.AddControllersWithViews();
         }
 

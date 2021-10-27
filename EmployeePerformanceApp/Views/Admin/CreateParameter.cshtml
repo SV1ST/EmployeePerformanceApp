@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EmployeePerformanceApp.Models.Parameter>
+
+@{
+    ViewData["Title"] = "Create Parameter";
+    Layout = "_LayoutAdmin";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<body>
+    <div class="form">
+        <table class="table">
+            <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
+            @foreach (var item in Model)
+            {
+                <tr><td>@item.ID</td><td>@item.ParameterName</td><td>@item.Coefficient</td></tr>
+            }
+        </table>
+
+        <form method="post" asp-action="CreateParameter" asp-controller="Admin">
+            <div class="text-center">
+                <input type="text" name="name" required placeholder="Name" />
+                <div>
+                    <input type="submit" value="Add" class="btn-success" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</body>
+
+
