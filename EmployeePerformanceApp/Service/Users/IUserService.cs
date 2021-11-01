@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Service.Users
+namespace EmployeePerformanceApp.Service
 {
     public interface IUserService
     {

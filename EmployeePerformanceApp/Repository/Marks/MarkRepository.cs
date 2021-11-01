@@ -22,7 +22,7 @@ namespace EmployeePerformanceApp.Repository
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<Mark>> GetAllData()
+        public async Task<List<Mark>> GetAllDataMark()
         {
             return await db.Marks.ToListAsync();
         }

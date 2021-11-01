@@ -1,6 +1,5 @@
 ﻿using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Repository;
-using EmployeePerformanceApp.Repository.Users;
 using EmployeePerformanceApp.Service;
 using Microsoft.AspNetCore.Http;
 using System;

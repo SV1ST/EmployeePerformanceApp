@@ -11,9 +11,8 @@ namespace EmployeePerformanceApp.Controllers
     {
         [Authorize(Roles = "Chief")]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> CheckHierarchyByChief()
         {
-            ViewBag.Ide = User.Identity.Name;
             return View();
         }
     }

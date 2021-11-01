@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Service.Parameters
+namespace EmployeePerformanceApp.Service
 {
     public class ParameterService : IParameterService
     {
@@ -15,9 +15,9 @@ namespace EmployeePerformanceApp.Service.Parameters
             _parameterRepository = parameterRepository;
         }
 
-        public async Task CreateParameterService(string name)
+        public async Task CreateParameterService(string name, int departmentId, double coefficient)
         {
-            Parameter parameter = new Parameter { ParameterName = name };
+            Parameter parameter = new Parameter { ParameterName = name, DepartmentId = departmentId, Coefficient = coefficient };
             await _parameterRepository.AddParameterForDB(parameter);
         }
     }

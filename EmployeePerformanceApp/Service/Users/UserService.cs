@@ -1,15 +1,12 @@
 ﻿using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repository;
-using EmployeePerformanceApp.Repository.Roles;
-using EmployeePerformanceApp.Repository.Statuses;
-using EmployeePerformanceApp.Repository.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Service.Users
+namespace EmployeePerformanceApp.Service
 {
 
     public class UserService : IUserService

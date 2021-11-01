@@ -10,7 +10,8 @@ namespace EmployeePerformanceApp.Models
         public int ID { get; set; }
         public string ParameterName { get; set; }
         public double Coefficient { get; set; }
-
+        public int? DepartmentId { get; set; }
+        public Department Department { get; set; }
         public List<Selection> Selections { get; set; }
         public List<Mark> Marks { get; set; }
         public Parameter()

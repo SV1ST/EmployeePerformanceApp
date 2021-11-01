@@ -16,17 +16,18 @@
         </tr>
         @foreach (var item in Model.Selections)
         {
-            <tr>
-                <td>@item.ID</td>
-                <td>@item.Department.DepartmentName</td>
-                <td>@item.SelectionName</td>
-                <td>
-                    @foreach (Parameter lala in item.Parameters)
-                    {
-                        <p>@lala.ParameterName</p>
-                    }
-                </td>
-            </tr>
+    <tr>
+        <td>@item.ID</td>
+        <td>@item.Department.DepartmentName</td>
+        <td>@item.SelectionName</td>
+        <td>
+            @foreach (Parameter lala in item.Parameters)
+            {
+                <p>@lala.ParameterName</p>
+            }
+       <a asp-controller="Admin" asp-action="CreateSelectionAction" asp-route-selectionID="@item.ID" asp-route-selectionName ="@item.SelectionName" asp-route-chosenDepartmentId="@item.DepartmentId" >Edit Parameter </a>
+        </td>
+    </tr>
         }
     </table>
     <form method="post" asp-action="CreateSelection" asp-controller="Admin">
@@ -43,7 +44,7 @@
                 </select>
             </div>
 
-            <div>
+            @*<div>
                 <strong class="text-white-50">Check parameters for this selection:</strong>
 
                 <div>
@@ -54,7 +55,7 @@
                         </label>
                     }
                 </div>
-            </div>
+            </div>*@
 
             <input type="text" name="selectionName" required placeholder="Name" />
 

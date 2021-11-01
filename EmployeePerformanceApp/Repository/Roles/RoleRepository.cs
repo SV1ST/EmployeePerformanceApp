@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Repository.Roles
+namespace EmployeePerformanceApp.Repository
 {
     public class RoleRepository : IRoleRepository
     {

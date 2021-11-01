@@ -8,6 +8,7 @@
     <div class="form">
         <table class="table">
             <tr>
+                <td>ID</td>
                 <td>LastName</td>
                 <td>FirstName</td>
                 <td>Login</td>
@@ -15,7 +16,6 @@
                 <td>Role</td>
                 <td>Status</td>
                 <td>Department</td>
-                <td>ID</td>
             </tr>
             @foreach (User user in Model.Users)
             {
@@ -32,16 +32,16 @@
                     continue;
                 }
 
-                <tr>
-                    <td>@user.LastName</td>
-                    <td>@user.FirstName</td>
-                    <td>@user.Login</td>
-                    <td>@user.Password</td>
-                    <td>@user.Role.RoleName</td>
-                    <td>@user.Status.StatusName</td>
-                    <td>@user.Department.DepartmentName</td>
-                    <td>@user.ID</td>
-                </tr>
+        <tr>
+            <td>@user.ID</td>
+            <td>@user.LastName</td>
+            <td>@user.FirstName</td>
+            <td>@user.Login</td>
+            <td>@user.Password</td>
+            <td>@user.Role.RoleName</td>
+            <td>@user.Status.StatusName</td>
+            <td>@user.Department.DepartmentName</td>
+        </tr>
             }
         </table>
         <form method="post" asp-action="DeleteUser">

@@ -1,0 +1,43 @@
+﻿@model CreateSelectionViewModel
+
+@{
+    ViewData["Title"] = "Add Parameter For The Chosen Selection";
+
+}
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+
+<div class="form">
+    <h2>SELECTION</h2>
+    <h2>@Model.CurrentSelectionName</h2>
+    <form method="post" asp-action="CreateSelectionAction">
+        <div class="text-center">
+            <div class="input-form">                
+                <label>Choose parameters for this selection:</label>
+                <div>
+                    @foreach (Parameter parameter in Model.Parameters)
+                    {
+                        if(parameter.DepartmentId !=Model.CurrentDepartmentID)
+                        {
+                            continue;
+                        }
+                    <label>
+                        <input type="checkbox" name="myarray" id="myarray" value="@parameter.ID" /><strong class="text-white">@parameter.ParameterName</strong> ;
+                        <input type="hidden" value="@Model.CurrentSelectionId" name="selectionID" />
+                        <input type="hidden" value="@Model.CurrentSelectionName" name="selectionName" />
+                        <input type="hidden" value="@Model.CurrentDepartmentID" name="chosenDepartmentId" />
+                        
+                    </label>
+                    }
+                </div>
+            </div>            
+            <div class="input-form">
+                <input type="submit" value="Overwrite" />
+            </div>
+            <div class="input-form">
+                <a asp-action="CreateSelection">Cancel</a>
+            </div>
+        </div>
+    </form>
+
+</div>

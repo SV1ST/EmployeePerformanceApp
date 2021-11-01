@@ -2,13 +2,7 @@
 using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repository;
-using EmployeePerformanceApp.Repository.Roles;
-using EmployeePerformanceApp.Repository.Selections;
-using EmployeePerformanceApp.Repository.Statuses;
-using EmployeePerformanceApp.Repository.Users;
-using EmployeePerformanceApp.Service.Parameters;
-using EmployeePerformanceApp.Service.Selections;
-using EmployeePerformanceApp.Service.Users;
+using EmployeePerformanceApp.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -125,14 +119,20 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateParameter()
         {
-            return View(await _parameterRepository.GetAllDataParameter());
+            AddParameterViewModel addParameterViewModel = new AddParameterViewModel();
+            addParameterViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
+            addParameterViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
+            return View(addParameterViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateParameter(string name)
-        {
-            await _parameterService.CreateParameterService(name);
+        public async Task<IActionResult> CreateParameter(string name, int departmentId , double coefficient)
+        {           
+            await _parameterService.CreateParameterService(name, departmentId, coefficient);
+            AddParameterViewModel addParameterViewModel = new AddParameterViewModel();
+            addParameterViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
+            addParameterViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
 
-            return View(await _parameterRepository.GetAllDataParameter());
+            return View(addParameterViewModel);
         }
         [HttpGet]
         public async Task<IActionResult> DeleteParameter()
@@ -159,18 +159,42 @@ namespace EmployeePerformanceApp.Controllers
             return View(createSelectionViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateSelection(int departmentId, string selectionName, int[] myarray)
+        public async Task<IActionResult> CreateSelection(int departmentId, string selectionName, int chosenDepartmentId)
         {
 
-            await _selectionService.CreateSelectionForDB(departmentId, selectionName, myarray);
+            await _selectionService.CreateSelectionForDB(departmentId, selectionName);
 
             CreateSelectionViewModel createSelectionViewModel = new CreateSelectionViewModel();
             createSelectionViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
             createSelectionViewModel.Selections = await _selectionRepository.GetAllDataSelection();
             createSelectionViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
+            createSelectionViewModel.CurrentDepartmentID = chosenDepartmentId;
             return View(createSelectionViewModel);
         }
-
-
-    }
+        [HttpGet]
+        public async Task<IActionResult> CreateSelectionAction(int selectionID, string selectionName, int chosenDepartmentId)
+        {
+            CreateSelectionViewModel createSelectionViewModel = new CreateSelectionViewModel();
+            createSelectionViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
+            createSelectionViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
+            createSelectionViewModel.Selections = await _selectionRepository.GetAllDataSelection();
+            createSelectionViewModel.CurrentSelectionId = selectionID;           
+            createSelectionViewModel.CurrentSelectionName = selectionName;
+            createSelectionViewModel.CurrentDepartmentID = chosenDepartmentId;
+            return View(createSelectionViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateSelectionAction(int selectionID, string selectionName, int chosenDepartmentId, int[] myarray)
+        {
+            CreateSelectionViewModel createSelectionViewModel = new CreateSelectionViewModel();
+            createSelectionViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
+            createSelectionViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
+            createSelectionViewModel.Selections = await _selectionRepository.GetAllDataSelection();
+            createSelectionViewModel.CurrentSelectionId = selectionID;
+            createSelectionViewModel.CurrentSelectionName = selectionName;
+            createSelectionViewModel.CurrentDepartmentID = chosenDepartmentId;
+            await _selectionService.AddParameterToSelection(myarray, selectionID);
+            return RedirectToAction("CreateSelection", "Admin");
+        }
+    }   
 }

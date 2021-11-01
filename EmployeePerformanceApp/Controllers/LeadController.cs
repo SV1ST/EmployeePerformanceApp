@@ -1,10 +1,6 @@
 ﻿using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repository;
-using EmployeePerformanceApp.Repository.Roles;
-using EmployeePerformanceApp.Repository.Selections;
-using EmployeePerformanceApp.Repository.Statuses;
-using EmployeePerformanceApp.Repository.Users;
 using EmployeePerformanceApp.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +21,13 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IStatusRepository _statusRepository;
         private readonly IParameterRepository _parameterRepository;
         private readonly ISelectionRepository _selectionRepository;
+        private readonly IMarkRepository _markRepository;
 
         //Services
         private readonly IMarkService _markService;
 
         public LeadController(IUserRepository userRepository, IRoleRepository roleRepository, IDepartmentRepository departmentRepository,
-            IStatusRepository statusRepository, IParameterRepository parameterRepository,
+            IStatusRepository statusRepository, IParameterRepository parameterRepository, IMarkRepository markRepository,
             ISelectionRepository selectionRepository, IMarkService markService)
         {
             _userRepository = userRepository;
@@ -39,6 +36,7 @@ namespace EmployeePerformanceApp.Controllers
             _statusRepository = statusRepository;
             _parameterRepository = parameterRepository;
             _selectionRepository = selectionRepository;
+            _markRepository = markRepository;
 
             _markService = markService;
         }
@@ -61,7 +59,7 @@ namespace EmployeePerformanceApp.Controllers
             return View(hierarhyViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> CheckHierarchy(string _lastName, string _firstName, string _department, string _status, string _role)
+        public async Task<IActionResult> CheckHierarchy(string _lastName, string _firstName,  string _status, string _role)
         {
             User user  = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));           
             List<Role> roles = await _roleRepository.GetAllDataRole();
@@ -70,7 +68,6 @@ namespace EmployeePerformanceApp.Controllers
             CheckHierarhyViewModel hierarhyViewModel = new CheckHierarhyViewModel();
             hierarhyViewModel.LastName = _lastName;
             hierarhyViewModel.FirstName = _firstName;
-            hierarhyViewModel.DepartmentName = _department;
             hierarhyViewModel.StatusName = _status;
             hierarhyViewModel.RoleName = _role;
             hierarhyViewModel.Users = await _userRepository.GetAllDataUser();
@@ -115,6 +112,7 @@ namespace EmployeePerformanceApp.Controllers
             addMarkViewModel.Roles = await _roleRepository.GetAllDataRole();
             addMarkViewModel.Statuses = await _statusRepository.GetAllDataStatus();
             addMarkViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
+            addMarkViewModel.Marks = await _markRepository.GetAllDataMark();
             addMarkViewModel.CurrentUserDepartmentId = user.DepartmentId;
             addMarkViewModel.CurrentUserRoleId = role.ID;
             return View(addMarkViewModel);
@@ -123,10 +121,12 @@ namespace EmployeePerformanceApp.Controllers
         public async Task<IActionResult> AddMarkAction(int userID)
         {
             User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User userEmployee = await _userRepository.GetUserById(userID);
             List<Role> roles = await _roleRepository.GetAllDataRole();
             Role role = roles.Where(x => x.RoleName == "Employee").FirstOrDefault();
             AddMarkViewModel addMarkViewModel = new AddMarkViewModel();
-            
+            addMarkViewModel.FirstName = userEmployee.FirstName;
+            addMarkViewModel.LastName = userEmployee.LastName;
             addMarkViewModel.Users = await _userRepository.GetAllDataUser();
             addMarkViewModel.Roles = await _roleRepository.GetAllDataRole();
             addMarkViewModel.Statuses = await _statusRepository.GetAllDataStatus();

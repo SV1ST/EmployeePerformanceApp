@@ -19,5 +19,6 @@ namespace EmployeePerformanceApp.Models
         public IEnumerable<Department> Departments { get; set; }
         public IEnumerable<Status> Statuses { get; set; }
         public IEnumerable<Parameter> Parameters { get; set; }
+        public IEnumerable <Mark> Marks { get; set; }
     }
 }

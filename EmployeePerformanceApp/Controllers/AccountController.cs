@@ -1,7 +1,7 @@
 ﻿using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Models;
-using EmployeePerformanceApp.Repository.Users;
-using EmployeePerformanceApp.Service.Users;
+using EmployeePerformanceApp.Repository;
+using EmployeePerformanceApp.Service;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +47,7 @@ namespace EmployeePerformanceApp.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Chief");                  
+                    return RedirectToAction("CheckHierarchyByChief", "Chief");                  
                 }
                 else if (user != null && user.RoleId == 1)
                 {

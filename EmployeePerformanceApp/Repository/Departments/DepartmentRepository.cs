@@ -17,7 +17,7 @@ namespace EmployeePerformanceApp.Repository
         }
         public async Task<List<Department>> GetAllDataDepartment()
         {
-            return await _context.Departments.ToListAsync();
+            return await _context.Departments.Include(x => x.Parameters).ToListAsync();
         }
     }
 }

@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="~/css/table.css" />
 <link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
 <body>
     <div class="form">
         <table class="table">
@@ -44,11 +45,10 @@
             }
         </table>
         <form method="post" asp-action="CheckHierarchy">
-            <div class="text-center">
+            <div class="input-form">
 
                 <input type="text" name="_lastName" placeholder="Surname" />
                 <input type="text" name="_firstName" placeholder="Name" />
-                <input type="text" name="_department" placeholder="Department" />
                 <input type="text" name="_status" placeholder="Status" />
                 <input type="text" name="_role" placeholder="Role" />
 

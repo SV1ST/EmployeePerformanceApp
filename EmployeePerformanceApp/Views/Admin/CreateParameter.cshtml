@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeePerformanceApp.Models.Parameter>
+﻿@model AddParameterViewModel
 
 @{
     ViewData["Title"] = "Create Parameter";
@@ -10,16 +10,26 @@
 <body>
     <div class="form">
         <table class="table">
-            <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
-            @foreach (var item in Model)
+            <tr><td>Name</td><td>Department</td><td>Coefficient</td></tr>
+            @foreach (var item in Model.Parameters)
             {
-                <tr><td>@item.ID</td><td>@item.ParameterName</td><td>@item.Coefficient</td></tr>
+                <tr><td>@item.ParameterName</td><td>@item.Department.DepartmentName</td><td>@item.Coefficient</td></tr>
             }
         </table>
 
         <form method="post" asp-action="CreateParameter" asp-controller="Admin">
             <div class="text-center">
                 <input type="text" name="name" required placeholder="Name" />
+                <select name="departmentId">
+                    @foreach (Department department in Model.Departments)
+                    {
+                        if (department.DepartmentName == "Admins")
+                            continue;
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </select>
+                <input type="number" step="0.01" min="0" max="1"  name="coefficient" required placeholder="Coefficient" />
+
                 <div>
                     <input type="submit" value="Add" class="btn-success" />
                 </div>

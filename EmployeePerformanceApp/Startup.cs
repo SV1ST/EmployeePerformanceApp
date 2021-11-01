@@ -1,13 +1,6 @@
 using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Repository;
-using EmployeePerformanceApp.Repository.Roles;
-using EmployeePerformanceApp.Repository.Selections;
-using EmployeePerformanceApp.Repository.Statuses;
-using EmployeePerformanceApp.Repository.Users;
 using EmployeePerformanceApp.Service;
-using EmployeePerformanceApp.Service.Parameters;
-using EmployeePerformanceApp.Service.Selections;
-using EmployeePerformanceApp.Service.Users;
 using EmployeePerformanceApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -83,6 +77,14 @@ namespace EmployeePerformanceApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRequestLocalization();
+
+            CultureInfo customCulture = new CultureInfo("EU");
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            CultureInfo.DefaultThreadCurrentCulture = customCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = customCulture;
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

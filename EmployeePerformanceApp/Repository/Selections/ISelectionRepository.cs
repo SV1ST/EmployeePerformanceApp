@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Repository.Selections
+namespace EmployeePerformanceApp.Repository
 {
     public interface ISelectionRepository
     {
@@ -12,5 +12,6 @@ namespace EmployeePerformanceApp.Repository.Selections
         Task<Selection> GetSelectionById(int id);
         Task AddSelectionForDB(Selection selection);
         Task DeleteSelectionForDB(int id);
+        Task Save();
     }
 }

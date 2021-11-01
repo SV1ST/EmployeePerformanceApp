@@ -5,15 +5,15 @@
 }
 <link rel="stylesheet" type="text/css" href="~/css/table.css" />
 <link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
 <body>
-    <div id="PlaceHolderHere"></div>
     <div class="form">
         <table class="table">
             <tr>
                 <td>LastName</td>
                 <td>FirstName</td>
                 <td>Role</td>
-                <td>Status</td>              
+                <td>Status</td>
             </tr>
             @foreach (User user in Model.Users)
             {
@@ -33,19 +33,19 @@
                     continue;
                 }
 
-        <tr>
-            <td>@user.LastName</td>
-            <td>@user.FirstName</td>
-            <td>@user.Role.RoleName</td>
-            <td>@user.Status.StatusName</td>
-            <td><a asp-controller="Lead" asp-action="AddMarkAction" asp-route-userID="@user.ID">Add Mark</a></td>
-            
+                <tr>
+                    <td>@user.LastName</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.Role.RoleName</td>
+                    <td>@user.Status.StatusName</td>
+                    <td><a  asp-controller="Lead" asp-action="AddMarkAction" asp-route-userID="@user.ID">Add Mark</a></td>
 
-        </tr>
+
+                </tr>
             }
         </table>
         <form method="post" asp-action="AddMark">
-            <div class="text-center">
+            <div class="input-form">
 
                 <input type="text" name="_lastName" placeholder="Surname" />
                 <input type="text" name="_firstName" placeholder="Name" />
@@ -55,7 +55,7 @@
                 <div>
                     <input type="submit" value="Search" class="btn-info" />
                 </div>
-            </div>
-        </form>
+            </div>            
+        </form>        
     </div>
 </body>

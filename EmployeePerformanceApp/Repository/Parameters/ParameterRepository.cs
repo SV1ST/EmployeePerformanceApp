@@ -40,6 +40,6 @@ namespace EmployeePerformanceApp.Repository
         public async Task <List<Parameter>> GetParametersByAllId(int[] ids)
         {
             return await _context.Parameters.Where(x => ids.Contains(x.ID)).ToListAsync();
-        }
+        }     
     }
 }

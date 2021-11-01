@@ -6,14 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeePerformanceApp.Repository.Selections
+namespace EmployeePerformanceApp.Repository
 {
     public class SelectionRepository : ISelectionRepository
     {
+        private readonly IParameterRepository _parameterRepository;
         private ApplicationContext _context;
-        public SelectionRepository(ApplicationContext context)
+        public SelectionRepository(ApplicationContext context,  IParameterRepository parameterRepository)
         {
             _context = context;
+
+            _parameterRepository = parameterRepository;
         }
 
         public async Task AddSelectionForDB(Selection selection)
@@ -35,6 +38,10 @@ namespace EmployeePerformanceApp.Repository.Selections
         public async Task<Selection> GetSelectionById(int ID)
         {
             return await _context.Selections.Where(x => x.ID == ID).FirstOrDefaultAsync();
+        } 
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
