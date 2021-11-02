@@ -1,0 +1,51 @@
+﻿@model AddMarkViewModel
+@{
+    ViewData["Title"] = "Add Mark To Lead";
+
+}
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+
+
+
+<div class="form">
+    <h2>@Model.LastName  @Model.FirstName</h2>
+    <form method="post" asp-action="AddMarkToLeadAction">
+        <div class="text-center">
+            <input type="hidden" value="@Model.UserId" name="userId" />
+            <div class="input-form">
+                <label for="parameterId">Parameter:</label>
+                <select name="parameterId">
+                    @foreach (Parameter parameter in Model.Parameters)
+                    {
+                        if (parameter.DepartmentId != Model.CurrentUserDepartmentId)
+                        {
+                            continue;
+                        }
+                        <option style="background-color:black" value="@parameter.ID">@parameter.ParameterName (@parameter.Coefficient factor)</option>
+
+                    }
+                </select>
+            </div>
+            <div class="input-form">
+                <label for="markValue">Value:</label>
+                <select name="markValue">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <option style="background-color:black" value="@i">@i</option>
+                    }
+                </select>
+            </div>
+            <div class="input-form">
+                <input type="text" name="markDescription" required placeholder="Mark Description" />
+            </div>
+            <div class="input-form">
+                <input type="submit" value="Rate" />
+            </div>
+            <div class="input-form">
+                <a asp-action="AddMarkToLead">Cancel</a>
+            </div>
+        </div>
+    </form>
+
+</div>

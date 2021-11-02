@@ -10,21 +10,21 @@ namespace EmployeePerformanceApp.Repository
 {
     public class MarkRepository : IMarkRepository
     {
-        private ApplicationContext db;
+        private ApplicationContext _context;
         public MarkRepository(ApplicationContext context)
         {
-            db = context;
+            _context = context;
         }
 
         public async Task AddMark(Mark mark)
         {
-            db.Marks.Add(mark);
-            await db.SaveChangesAsync();
+            _context.Marks.Add(mark);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<Mark>> GetAllDataMark()
         {
-            return await db.Marks.ToListAsync();
+            return await _context.Marks.Include(x => x.User).Include(x => x.Parameter).ToListAsync();
         }
 
         public Task<Mark> GetMarkById(int id)

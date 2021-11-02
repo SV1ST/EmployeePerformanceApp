@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Переключить навигацию">
                     <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,25 @@
                             {
                                 <button class="btn btn-outline-danger" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">LogOut</font></font></button>
                             }
-                        </li>                        
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("CheckHierarchyByChief", "Chief", FormMethod.Get))
+                            {
+                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">My Team</font></font></button>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("AddMarkToLead", "Chief", FormMethod.Get))
+                            {
+                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Add Mark</font></font></button>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("ShowAllMarks", "Chief", FormMethod.Get))
+                            {
+                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">All Marks</font></font></button>
+                            }
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -27,7 +27,7 @@ namespace EmployeePerformanceApp.Services
             User currentUser = await _userRepository.GetUserById(currentUserId);
             DateTime assessmentDate = DateTime.Now;
 
-            Mark mark = new Mark { ParameterId = parameterId, MarkValue = markValue, MarkDescription = markDescription, UserId = userId, AssessorId = currentUser.ID, AssesmentDate = assessmentDate };
+            Mark mark = new Mark { ParameterId = parameterId, MarkValue = markValue, MarkDescription = markDescription, UserId = userId, AssessorId = currentUser.ID, AssesmentDate = assessmentDate, IsActual = true, AssessorFirstName = currentUser.FirstName, AssessorLastName = currentUser.LastName };
             await _markRepository.AddMark(mark);
         }
     }

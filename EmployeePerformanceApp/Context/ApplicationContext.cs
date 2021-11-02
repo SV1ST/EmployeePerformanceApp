@@ -52,10 +52,10 @@ namespace EmployeePerformanceApp.Context
             User lead2User = new User { ID = 10, FirstName = "Ilias", LastName = "Vasiliev", Login = "IL44312", Password = "123", RoleId = leadRole.ID, StatusId = workingStatus.ID, DepartmentId = testersDepartment.ID };
             User chief2User = new User { ID = 11, FirstName = "James", LastName = "Kyk", Login = "kyk239", Password = "123", RoleId = chiefRole.ID, StatusId = workingStatus.ID, DepartmentId = testersDepartment.ID };
 
-            /*Parameter parameter1 = new Parameter { ID = 1, ParameterName = "Productive skills", Coefficient = 0, DepartmentId = programmersDepartment.ID };
-            Parameter parameter2 = new Parameter { ID = 2, ParameterName = "Communication skills", Coefficient = 0,  DepartmentId = programmersDepartment.ID };
-            Parameter prameter3 = new Parameter { ID = 3, ParameterName = "Linguistic skills", Coefficient = 0,  DepartmentId = programmersDepartment.ID };
-            Parameter parameter4 = new Parameter { ID = 4, ParameterName = "Leadership skills", Coefficient = 0,  DepartmentId = programmersDepartment.ID };*/
+            Parameter parameter1 = new Parameter { ID = 1, ParameterName = "Productive skills", Coefficient = 0.25, DepartmentId = programmersDepartment.ID };
+            Parameter parameter2 = new Parameter { ID = 2, ParameterName = "Communication skills", Coefficient = 0.45,  DepartmentId = programmersDepartment.ID };
+            Parameter prameter3 = new Parameter { ID = 3, ParameterName = "Linguistic skills", Coefficient = 0.5,  DepartmentId = programmersDepartment.ID };
+            Parameter parameter4 = new Parameter { ID = 4, ParameterName = "Leadership skills", Coefficient = 0.7,  DepartmentId = programmersDepartment.ID };
 
 
             modelBuilder.Entity<Selection>(x => {
@@ -65,7 +65,7 @@ namespace EmployeePerformanceApp.Context
             modelBuilder.Entity<Status>().HasData(new Status[] { workingStatus, firedStatus });
             modelBuilder.Entity<Department>().HasData(new Department[] { adminsDepartment, programmersDepartment, testersDepartment });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser, user1User, user2User, user3User, leadUser, chiefUser, user4User, user5User, user6User, lead2User, chief2User });
-            /*modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, prameter3, parameter4 });*/
+            modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, prameter3, parameter4 });
 
             base.OnModelCreating(modelBuilder);
         }

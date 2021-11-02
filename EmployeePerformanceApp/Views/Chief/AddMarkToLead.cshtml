@@ -1,6 +1,6 @@
-﻿@model CheckHierarhyViewModel
+﻿@model AddMarkViewModel
 @{
-    ViewData["Title"] = "Department Hierarchy";
+    ViewData["Title"] = "Add Mark";
     Layout = "_LayoutChief";
 }
 <link rel="stylesheet" type="text/css" href="~/css/table.css" />
@@ -14,7 +14,6 @@
                 <td>FirstName</td>
                 <td>Role</td>
                 <td>Status</td>
-                <td>Department</td>
             </tr>
             @foreach (User user in Model.Users)
             {
@@ -22,13 +21,12 @@
                 {
                     continue;
                 }
-                if (user.DepartmentId != Model.CurrentUserDepartmentId || user.ID == Model.CurrentUserId)
+                if (user.DepartmentId != Model.CurrentUserDepartmentId || user.RoleId != Model.CurrentUserRoleId)
                 {
                     continue;
                 }
                 if (Model.LastName != null && !user.LastName.Contains(Model.LastName.Trim()) ||
                     Model.FirstName != null && !user.FirstName.Contains(Model.FirstName.Trim()) ||
-                    Model.DepartmentName != null && !user.Department.DepartmentName.Contains(Model.DepartmentName.Trim()) ||
                     Model.StatusName != null && !user.Status.StatusName.Contains(Model.StatusName.Trim()) ||
                     Model.RoleName != null && !user.Role.RoleName.Contains(Model.RoleName.Trim()))
                 {
@@ -40,11 +38,13 @@
                     <td>@user.FirstName</td>
                     <td>@user.Role.RoleName</td>
                     <td>@user.Status.StatusName</td>
-                    <td>@user.Department.DepartmentName</td>
+                    <td><a asp-controller="Chief" asp-action="AddMarkToLeadAction" asp-route-userID="@user.ID">Add Mark</a></td>
+
+
                 </tr>
             }
         </table>
-        <form method="post" asp-action="CheckHierarchyByChief">
+        <form method="post" asp-action="AddMarkToLead">
             <div class="input-form">
 
                 <input type="text" name="_lastName" placeholder="Surname" />

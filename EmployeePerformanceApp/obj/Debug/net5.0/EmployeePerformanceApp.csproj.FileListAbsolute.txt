@@ -61,7 +61,6 @@ C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\DeleteParameter.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\DeleteUser.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
-C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\Index.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Lead\AddMark.cshtml.g.cs
@@ -84,3 +83,6 @@ C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\EmployeePerformanceApp.genruntimeconfig.cache
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Shared\_LayoutChief.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\CheckHierarchyByChief.cshtml.g.cs
+C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\AddMarkToLead.cshtml.g.cs
+C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\AddMarkToLeadAction.cshtml.g.cs
+C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\ShowAllMarks.cshtml.g.cs

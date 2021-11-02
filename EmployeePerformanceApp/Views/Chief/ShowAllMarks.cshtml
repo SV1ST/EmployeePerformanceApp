@@ -1,0 +1,36 @@
+﻿@model ShowAllMarksViewModel
+@{
+    ViewData["Title"] = "All grades of my department";
+    Layout = "_LayoutChief";
+
+}
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+<body>
+    <div class="form">
+        <table class="table">
+            <tr>
+                <td>Parameter</td>
+                <td>Mark Value</td>
+                <td>Mark Description</td>
+                <td>User</td>
+                <td>Assessor</td>
+                <td>Assessment Date</td>
+            </tr>
+            @foreach (Mark mark in Model.Marks)
+            {
+                if (mark.User.DepartmentId != Model.getCurrentUserIdDepartment)
+                    continue;
+                <tr>
+                    <td>@mark.Parameter.ParameterName</td>
+                    <td>@mark.MarkValue</td>
+                    <td>@mark.MarkDescription</td>
+                    <td>@mark.User.LastName @mark.User.FirstName</td>
+                    <td>@mark.AssessorLastName @mark.AssessorFirstName</td>
+                    <td>@mark.AssesmentDate</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
