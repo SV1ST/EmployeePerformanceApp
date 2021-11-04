@@ -154,7 +154,28 @@ namespace EmployeePerformanceApp.Controllers
             showAllMarksViewModel.Users = await _userRepository.GetAllDataUser();
             return View(showAllMarksViewModel);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> ShowAllActualMarks()
+        {
+            List<Mark> marks = await _markRepository.GetAllDataMark();
+            List<Mark> actualMarks = new List<Mark>();
+            TimeSpan diff;
+            foreach (Mark item in marks)
+            {
+                diff = DateTime.Now.Subtract(item.AssesmentDate);
+                if (diff.TotalDays < 90)
+                {
+                    actualMarks.Add(item);
+                }
+            }
+            ShowAllMarksViewModel showAllMarksViewModel = new ShowAllMarksViewModel();
+            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            showAllMarksViewModel.getCurrentUserIdDepartment = user.DepartmentId;
+            showAllMarksViewModel.Marks = actualMarks;
+            showAllMarksViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
+            showAllMarksViewModel.Users = await _userRepository.GetAllDataUser();
+            return View(showAllMarksViewModel);
+        }
     }
 }
 

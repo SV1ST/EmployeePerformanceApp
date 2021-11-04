@@ -1,6 +1,6 @@
 ﻿@model ShowAllMarksViewModel
 @{
-    ViewData["Title"] = "All grades of my department";
+    ViewData["Title"] = "Actual grades of my department";
     Layout = "_LayoutChief";
 
 }
@@ -19,7 +19,7 @@
                 <td>Assessment Date</td>
             </tr>
             @foreach (Mark mark in Model.Marks)
-            {
+            {        
                 if (mark.User.DepartmentId != Model.getCurrentUserIdDepartment)
                     continue;
                 <tr>
@@ -33,7 +33,7 @@
             }
         </table>
         <div class="input-form">
-            <a asp-action="ShowAllActualMarks">Show Only Actual Marks</a>
+            <a asp-action="ShowAllMarks">Show All Marks</a>
         </div>
     </div>
 </body>

@@ -86,3 +86,4 @@ C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\AddMarkToLead.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\AddMarkToLeadAction.cshtml.g.cs
 C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\ShowAllMarks.cshtml.g.cs
+C:\Users\79197\Desktop\SolbegSoft\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\ShowAllActualMarks.cshtml.g.cs
