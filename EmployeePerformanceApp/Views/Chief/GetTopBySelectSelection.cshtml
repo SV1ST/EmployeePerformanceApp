@@ -1,0 +1,54 @@
+﻿@model GetTopBySelectSelectionViewModel
+
+@{ ViewData["Title"] = "Top/Bottom";
+    Layout = "_LayoutChief"; }
+
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+
+<div class="form">
+    <h2>Top Users</h2>
+    <table class="table">
+        <tr>
+            <td>LastName</td>
+            <td>FirstName</td>
+            <td>RoleName</td>
+        </tr>
+        @foreach (User user in Model.UserTop)
+        {
+            <tr>
+                <td>@user.LastName</td>
+                <td>@user.FirstName</td>
+                <td>@user.Role.RoleName</td>
+            </tr>
+        }
+    </table>
+
+
+    <h2>Bottom Users</h2>
+    <table class="table">
+        <tr>
+            <td>LastName</td>
+            <td>FirstName</td>
+            <td>RoleName</td>
+        </tr>
+        @foreach (User user in Model.UserBottom)
+        {
+            <tr>
+                <td>@user.LastName</td>
+                <td>@user.FirstName</td>
+                <td>@user.Role.RoleName</td>
+            </tr>
+        }
+    </table>
+    <form method="post" asp-action="GetTopBySelectSelection">
+        <input type="hidden" name="selectionID" value="@Model.getCurrentSelectionId" />
+        <input type="hidden" name="saveName" value="@Model.getCurrentSelectionName" />
+        <div class="input-form">
+            <div>
+                <input type="submit" value="Download excel file" class="btn-info" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -19,5 +19,10 @@ namespace EmployeePerformanceApp.Repository
         {
             return await _context.Departments.Include(x => x.Parameters).ToListAsync();
         }
+        public async Task<Department> GetDepartmentById(int id)
+        {
+            Department department = await _context.Departments.Where(x => x.ID == id).FirstOrDefaultAsync();
+            return (department != null) ? department : null;
+        }
     }
 }

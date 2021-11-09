@@ -10,7 +10,7 @@ namespace EmployeePerformanceApp.Repository
     {
         Task AddMark(Mark mark);
         Task<List<Mark>> GetAllDataMark();
-        Task<Mark> GetMarkById(int id);
-        
+        Task<List<Mark>> GetMarkByUserAndDepartmentIds(int userId, int parameterId);
+
     }
 }

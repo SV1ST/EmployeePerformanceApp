@@ -20,26 +20,27 @@
                         <li class="nav-item">
                             @using (Html.BeginForm("Logout", "Account", FormMethod.Get))
                             {
-                                <button class="btn btn-outline-danger" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">LogOut</font></font></button>
-                            }
+                    <button class="btn btn-outline-danger" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">LogOut</font></font></button>}
                         </li>
                         <li class="nav-item">
                             @using (Html.BeginForm("CheckHierarchyByChief", "Chief", FormMethod.Get))
                             {
-                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">My Team</font></font></button>
-                            }
+                    <button class="btn btn-outline-light" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">My Team</font></font></button>}
                         </li>
                         <li class="nav-item">
                             @using (Html.BeginForm("AddMarkToLead", "Chief", FormMethod.Get))
                             {
-                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Add Mark</font></font></button>
-                            }
+                    <button class="btn btn-outline-light" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Add Mark</font></font></button>}
                         </li>
                         <li class="nav-item">
                             @using (Html.BeginForm("ShowAllMarks", "Chief", FormMethod.Get))
                             {
-                                <button class="btn btn-outline-primary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">All Marks</font></font></button>
-                            }
+                    <button class="btn btn-outline-light" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">All Marks</font></font></button>}
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("ShowAllSelections", "Chief", FormMethod.Get))
+                            {
+                    <button class="btn btn-outline-light" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">All Selections</font></font></button>}
                         </li>
                     </ul>
                 </div>

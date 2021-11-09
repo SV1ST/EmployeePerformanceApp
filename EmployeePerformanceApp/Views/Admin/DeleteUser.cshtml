@@ -16,6 +16,7 @@
                 <td>Role</td>
                 <td>Status</td>
                 <td>Department</td>
+                <td></td>
             </tr>
             @foreach (User user in Model.Users)
             {
@@ -41,6 +42,7 @@
             <td>@user.Role.RoleName</td>
             <td>@user.Status.StatusName</td>
             <td>@user.Department.DepartmentName</td>
+            <td><a asp-controller="Admin" asp-action="EditUserById" asp-route-ID="@user.ID">Edit</a></td>
         </tr>
             }
         </table>

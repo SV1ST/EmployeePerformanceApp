@@ -37,7 +37,7 @@ namespace EmployeePerformanceApp.Repository
 
         public async Task<Selection> GetSelectionById(int ID)
         {
-            return await _context.Selections.Where(x => x.ID == ID).FirstOrDefaultAsync();
+            return await _context.Selections.Include(x => x.Parameters).Where(x => x.ID == ID).FirstOrDefaultAsync();
         } 
         public async Task Save()
         {

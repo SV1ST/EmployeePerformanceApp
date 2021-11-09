@@ -1,11 +1,12 @@
-﻿using EmployeePerformanceApp.Models;
-using EmployeePerformanceApp.Models.ModelsForViews;
+﻿using ClosedXML.Excel;
+using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Repository;
 using EmployeePerformanceApp.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,128 +15,53 @@ namespace EmployeePerformanceApp.Controllers
     [Authorize(Roles = "Chief")]
     public class ChiefController : Controller
     {
-        //Repositories
+        //Repositories to work with records in Excel, because I don't know yet
         private readonly IUserRepository _userRepository;
-        private readonly IRoleRepository _roleRepository;
-        private readonly IDepartmentRepository _departmentRepository;
-        private readonly IStatusRepository _statusRepository;
-        private readonly IParameterRepository _parameterRepository;
         private readonly ISelectionRepository _selectionRepository;
-        private readonly IMarkRepository _markRepository;
+
 
         //Services
         private readonly IMarkService _markService;
+        private readonly IUserService _userService;
+        private readonly ISelectionService _selectionService;
 
-        public ChiefController(IUserRepository userRepository, IRoleRepository roleRepository, IDepartmentRepository departmentRepository,
-            IStatusRepository statusRepository, IParameterRepository parameterRepository, IMarkRepository markRepository,
-            ISelectionRepository selectionRepository, IMarkService markService)
+        public ChiefController(IUserRepository userRepository,            
+                               ISelectionRepository selectionRepository,
+                               IMarkService markService, IUserService userService,
+                               ISelectionService selectionService)
         {
             _userRepository = userRepository;
-            _roleRepository = roleRepository;
-            _departmentRepository = departmentRepository;
-            _statusRepository = statusRepository;
-            _parameterRepository = parameterRepository;
             _selectionRepository = selectionRepository;
-            _markRepository = markRepository;
 
             _markService = markService;
+            _userService = userService;
+            _selectionService = selectionService;
         }
 
         [HttpGet]
         public async Task<IActionResult> CheckHierarchyByChief()
-        {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<Role> roles = await _roleRepository.GetAllDataRole();
-            Role role = roles.Where(x => x.RoleName == "Employee").FirstOrDefault();
-            List<User> users = await _userRepository.GetAllSubordinatesUser(user.DepartmentId, role.ID);
-
-            CheckHierarhyViewModel hierarhyViewModel = new CheckHierarhyViewModel();
-            hierarhyViewModel.Users = await _userRepository.GetAllDataUser();
-            hierarhyViewModel.Roles = await _roleRepository.GetAllDataRole();
-            hierarhyViewModel.Statuses = await _statusRepository.GetAllDataStatus();
-            hierarhyViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
-            hierarhyViewModel.CurrentUserDepartmentId = user.DepartmentId;
-            hierarhyViewModel.CurrentUserId = user.ID;
-            return View(hierarhyViewModel);
+        {            
+            return View(await _userService.CheckHierarchyForChiefClient());
         }
         [HttpPost]
         public async Task<IActionResult> CheckHierarchyByChief(string _lastName, string _firstName, string _status, string _role)
-        {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<Role> roles = await _roleRepository.GetAllDataRole();
-            Role role = roles.Where(x => x.RoleName == "Employee").FirstOrDefault();
-            List<User> users = await _userRepository.GetAllSubordinatesUser(user.DepartmentId, role.ID);
-            CheckHierarhyViewModel hierarhyViewModel = new CheckHierarhyViewModel();
-            hierarhyViewModel.LastName = _lastName;
-            hierarhyViewModel.FirstName = _firstName;
-            hierarhyViewModel.StatusName = _status;
-            hierarhyViewModel.RoleName = _role;
-            hierarhyViewModel.Users = await _userRepository.GetAllDataUser();
-            hierarhyViewModel.Roles = await _roleRepository.GetAllDataRole();
-            hierarhyViewModel.Statuses = await _statusRepository.GetAllDataStatus();
-            hierarhyViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
-            hierarhyViewModel.CurrentUserDepartmentId = user.DepartmentId;
-            hierarhyViewModel.CurrentUserId = user.ID;
-            return View(hierarhyViewModel);
+        {         
+            return View(await _userService.CheckHierarhyForChiefClientWithSomeParameters(_lastName, _firstName, _status, _role));
         }
         [HttpGet]
         public async Task<IActionResult> AddMarkToLead()
         {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<Role> roles = await _roleRepository.GetAllDataRole();
-            Role role = roles.Where(x => x.RoleName == "Lead").FirstOrDefault();
-            List<User> users = await _userRepository.GetAllSubordinatesUser(user.DepartmentId, role.ID);
-
-            AddMarkViewModel addMarkViewModel = new AddMarkViewModel();
-            addMarkViewModel.Users = await _userRepository.GetAllDataUser();
-            addMarkViewModel.Roles = await _roleRepository.GetAllDataRole();
-            addMarkViewModel.Statuses = await _statusRepository.GetAllDataStatus();
-            addMarkViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
-            addMarkViewModel.CurrentUserDepartmentId = user.DepartmentId;
-            addMarkViewModel.CurrentUserRoleId = role.ID;
-            return View(addMarkViewModel);
+            return View(await _markService.AddMarkViewForChief());
         }
         [HttpPost]
         public async Task<IActionResult> AddMarkToLead(string _lastName, string _firstName, string _status, string _role)
         {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<Role> roles = await _roleRepository.GetAllDataRole();
-            Role role = roles.Where(x => x.RoleName == "Lead").FirstOrDefault();
-            List<User> users = await _userRepository.GetAllSubordinatesUser(user.DepartmentId, role.ID);
-
-            AddMarkViewModel addMarkViewModel = new AddMarkViewModel();
-            addMarkViewModel.LastName = _lastName;
-            addMarkViewModel.FirstName = _firstName;
-            addMarkViewModel.StatusName = _status;
-            addMarkViewModel.RoleName = _role;
-            addMarkViewModel.Users = await _userRepository.GetAllDataUser();
-            addMarkViewModel.Roles = await _roleRepository.GetAllDataRole();
-            addMarkViewModel.Statuses = await _statusRepository.GetAllDataStatus();
-            addMarkViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
-            addMarkViewModel.Marks = await _markRepository.GetAllDataMark();
-            addMarkViewModel.CurrentUserDepartmentId = user.DepartmentId;
-            addMarkViewModel.CurrentUserRoleId = role.ID;
-            return View(addMarkViewModel);
+            return View(await _markService.AddMarkViewForChiefWithSomeParameter(_lastName, _firstName, _status, _role));
         }
         [HttpGet]
         public async Task<IActionResult> AddMarkToLeadAction(int userID)
         {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            User userEmployee = await _userRepository.GetUserById(userID);
-            List<Role> roles = await _roleRepository.GetAllDataRole();
-            Role role = roles.Where(x => x.RoleName == "Employee").FirstOrDefault();
-            AddMarkViewModel addMarkViewModel = new AddMarkViewModel();
-            addMarkViewModel.FirstName = userEmployee.FirstName;
-            addMarkViewModel.LastName = userEmployee.LastName;
-            addMarkViewModel.Users = await _userRepository.GetAllDataUser();
-            addMarkViewModel.Roles = await _roleRepository.GetAllDataRole();
-            addMarkViewModel.Statuses = await _statusRepository.GetAllDataStatus();
-            addMarkViewModel.Departments = await _departmentRepository.GetAllDataDepartment();
-            addMarkViewModel.CurrentUserDepartmentId = user.DepartmentId;
-            addMarkViewModel.CurrentUserRoleId = role.ID;
-            addMarkViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
-            addMarkViewModel.UserId = userID;
-            return View(addMarkViewModel);
+            return View(await _markService.AddMarkActionViewForChief(userID));
         }
         [HttpPost]
         public async Task<IActionResult> AddMarkToLeadAction(int userID, int parameterId, int markValue, string markDescription)
@@ -146,36 +72,110 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowAllMarks()
         {
-            ShowAllMarksViewModel showAllMarksViewModel = new ShowAllMarksViewModel();
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            showAllMarksViewModel.getCurrentUserIdDepartment = user.DepartmentId;
-            showAllMarksViewModel.Marks = await _markRepository.GetAllDataMark();
-            showAllMarksViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
-            showAllMarksViewModel.Users = await _userRepository.GetAllDataUser();
-            return View(showAllMarksViewModel);
+            return View(await _markService.ShowAllMarksForChief());
         }
         [HttpGet]
         public async Task<IActionResult> ShowAllActualMarks()
         {
-            List<Mark> marks = await _markRepository.GetAllDataMark();
-            List<Mark> actualMarks = new List<Mark>();
-            TimeSpan diff;
-            foreach (Mark item in marks)
+            return View(await _markService.ShowAllActualMarksForChief());
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowAllSelections()
+        {
+            return View(await _selectionService.ShowAllSelections());
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> ShowAllSelections(int ID)
+        {       
+            return View(await _selectionService.ShowAllSelections(ID));
+        }
+        [HttpGet]
+        public async Task<IActionResult>GetTopBySelectSelection(int selectionID)
+        {
+            return View(await _selectionService.GetTopBySelectSelection(selectionID));
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetTopBySelectSelection(int selectionID, string saveName)
+        {
+            User chief = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            List<User> users = await _userRepository.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
+
+            Selection selection = await _selectionRepository.GetSelectionById(selectionID);
+
+
+            var parameters = selection.Parameters.ToDictionary(p => p.ID, p => p);
+
+            var markedUsers = new List<(User user, double mark)>(users.Count);
+
+            foreach (var user in users)
             {
-                diff = DateTime.Now.Subtract(item.AssesmentDate);
-                if (diff.TotalDays < 90)
+                var total = 0.0;
+                var marks = new Dictionary<int, List<double>>();
+
+                foreach (var mark in user.Marks)
                 {
-                    actualMarks.Add(item);
+                    if (selection.Parameters.Contains(mark.Parameter))
+                    {
+                        if (!marks.ContainsKey(mark.ParameterId))
+                            marks[mark.ParameterId] = new List<double>();
+
+                        marks[mark.ParameterId].Add(mark.MarkValue);
+                    }
+                }
+
+                foreach (var kv in marks)
+                {
+                    var average = kv.Value.Average();
+                    total += average * parameters[kv.Key].Coefficient;
+                }
+
+                markedUsers.Add((user, total));
+            }
+
+            var bottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).Select(t => t.user);
+            var topUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).Select(t => t.user);
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Top");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Surname";
+                worksheet.Cell(currentRow, 2).Value = "Name";
+                worksheet.Cell(currentRow, 3).Value = "Role";
+                foreach (var user in topUsers)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = user.LastName;
+                    worksheet.Cell(currentRow, 2).Value = user.FirstName;
+                    worksheet.Cell(currentRow, 3).Value = user.Role.RoleName;
+                }
+                var worksheet1 = workbook.Worksheets.Add("Bottom");
+                var currentRow1 = 1;
+                worksheet1.Cell(currentRow1, 1).Value = "Surname";
+                worksheet1.Cell(currentRow1, 2).Value = "Name";
+                worksheet1.Cell(currentRow1, 3).Value = "Role";
+                foreach (var user in bottomUsers)
+                {
+                    currentRow1++;
+                    worksheet1.Cell(currentRow1, 1).Value = user.LastName;
+                    worksheet1.Cell(currentRow1, 2).Value = user.FirstName;
+                    worksheet1.Cell(currentRow1, 3).Value = user.Role.RoleName;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        $"Selection_{saveName}/{DateTime.Now.Day}.{DateTime.Now.Month}.xlsx");
                 }
             }
-            ShowAllMarksViewModel showAllMarksViewModel = new ShowAllMarksViewModel();
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            showAllMarksViewModel.getCurrentUserIdDepartment = user.DepartmentId;
-            showAllMarksViewModel.Marks = actualMarks;
-            showAllMarksViewModel.Parameters = await _parameterRepository.GetAllDataParameter();
-            showAllMarksViewModel.Users = await _userRepository.GetAllDataUser();
-            return View(showAllMarksViewModel);
         }
     }
 }
+
 

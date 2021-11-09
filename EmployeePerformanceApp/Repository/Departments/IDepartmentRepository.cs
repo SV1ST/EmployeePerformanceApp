@@ -9,5 +9,6 @@ namespace EmployeePerformanceApp.Repository
     public interface IDepartmentRepository
     {
         Task<List<Department>> GetAllDataDepartment();
+        Task<Department> GetDepartmentById(int id);
     }
 }

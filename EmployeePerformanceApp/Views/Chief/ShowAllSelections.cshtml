@@ -1,0 +1,43 @@
+﻿@model ShowAllSlectionsByCurrentDepartmentViewModel
+
+@{ ViewData["Title"] = "All Selection";
+                Layout = "_LayoutChief"; }
+
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+<link rel="stylesheet" type="text/css" href="~/css/table.css" />
+
+<body>
+    <div class="form">
+        <h2>@Model.currentDepartmentName</h2>
+        <table class="table">
+            <tr>
+                <td>Id</td>
+                <td>Department</td>
+                <td>Name</td>
+                <td>Parameters</td>
+                <td>Selection View (TOP/BOTTOM)</td>
+            </tr>
+            @foreach (Selection selection in Model.Selections)
+            {
+                if (selection.DepartmentId != Model.currentDepartmentId)
+                {
+                    continue;
+                }
+
+    <tr>
+        <td>@selection.ID</td>
+        <td>@selection.Department.DepartmentName</td>
+        <td>@selection.SelectionName</td>
+        <td>
+            @foreach (Parameter lala in selection.Parameters)
+            {
+             <p>@lala.ParameterName</p>
+            }
+            </td>
+        <td><a asp-controller="Chief" asp-action="GetTopBySelectSelection" asp-route-selectionID="@selection.ID">Look</a></td>
+    </tr>
+            }
+        </table>
+    </div>
+</body>

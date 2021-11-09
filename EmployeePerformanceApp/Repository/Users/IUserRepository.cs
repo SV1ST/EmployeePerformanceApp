@@ -14,6 +14,9 @@ namespace EmployeePerformanceApp.Repository
         Task<User> CheckByLoginForCreateNewUser(string login);
         Task AddUserForDB(User user);
         Task DeleteUserForDB(User user);
+        Task UpdateUserForDB();
         Task<List<User>> GetAllSubordinatesUser(int IDDep, int IDRole);
+        Task<List<User>> GetUsersByDepartmentId(int id);
+        Task<List<User>> GetUsersByDepartmentIdNotChief(int id);
     }
 }

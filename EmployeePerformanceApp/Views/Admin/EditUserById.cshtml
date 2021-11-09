@@ -1,0 +1,46 @@
+﻿@model EditUserByGetUserViewModel
+
+@{ ViewData["Title"] = "Edit User"; }
+<link rel="stylesheet" type="text/css" href="~/css/backgroundApp.css" />
+<link rel="stylesheet" type="text/css" href="~/css/CentralFormForAdding.css" />
+<body>
+    <div class="form">
+        <h2>@Model.getUser.LastName @Model.getUser.FirstName</h2>
+        <form method="post" asp-action="EditUserById">
+            <div class="text-center">
+                <div class="input-form">
+                    <input type="text" name="_lastName" required placeholder=@Model.getUser.LastName value="@Model.getUser.LastName" />
+                </div>
+                <div class="input-form">
+                    <input type="text" name="_firstName" required placeholder=@Model.getUser.FirstName value="@Model.getUser.FirstName" />
+                </div>
+                <div class="input-form">
+                    <label for="_roleID">Role:</label>
+                    <select name="_roleID" >
+                        @foreach (Role role in Model.Roles)
+                        {
+                            if (role.RoleName == "Admin")
+                            {
+                                continue;
+                            }
+                            <option  style="background-color:black" value="@role.ID">@role.RoleName</option>
+                         }                        
+                    </select>
+                </div>
+                <div class="input-form">
+                    <label for="_statusID">Status:</label>
+                    <select name="_statusID">
+                        @foreach (Status status in Model.Statuses)
+                        {                            
+                         <option selected="selected" style="background-color:black" value="@status.ID">@status.StatusName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="input-form">
+                <input type="submit" value="Edit" />
+            </div>
+        </form>
+
+    </div>
+</body>
